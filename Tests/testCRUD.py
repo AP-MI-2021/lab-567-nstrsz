@@ -12,7 +12,11 @@ def testAdaugaCheltuiala():
     assert getData(getByNrApartament(343,lista)) == "11.02.2011"
     assert getTip(getByNrApartament(343,lista)) == "intretinere"
 
-    #assert getId(lista[0]) == 1
+    # assert getId(list[0]) == 1
+    # assert getNrApartament(list[0]) == 343
+    # assert getSuma(list[0]) == 235
+    # assert getData(list[0]) == "11.02.2011"
+    # assert getTip(list[0]) == "intretinere"
 
 def testStergeCheltuiala():
     lista = []
