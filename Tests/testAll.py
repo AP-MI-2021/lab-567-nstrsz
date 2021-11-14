@@ -1,7 +1,7 @@
 from Tests.testCRUD import testAdaugaCheltuiala, testStergeCheltuiala, testGetByNrApartament
 from Tests.testDomain import testCheltuiala
-from Tests.testFunctionalitati import testAdunareValLaCheltuielileDintr_Data, \
-    testDeterminaCeleMaiMariCheltuieliPentruFiecareTip
+from Tests.testFunctionalitati import testAdunareValLaCheltuielileDintr_Data, testDetCeleMaiMariCheltuieliPerTip, \
+    testOrdonareDescDupaSuma, testSumeLunarePerApartament
 
 
 def runAllTests():
@@ -9,5 +9,7 @@ def runAllTests():
     testAdaugaCheltuiala()
     testStergeCheltuiala()
     testAdunareValLaCheltuielileDintr_Data()
-    testDeterminaCeleMaiMariCheltuieliPentruFiecareTip()
     testGetByNrApartament()
+    testDetCeleMaiMariCheltuieliPerTip()
+    testOrdonareDescDupaSuma()
+    testSumeLunarePerApartament()

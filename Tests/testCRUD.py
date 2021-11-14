@@ -27,9 +27,15 @@ def testStergeCheltuiala():
     assert len(lista) == 1
     assert getByNrApartament(343, lista) is None
 
-    lista= stergeCheltuiala(10, lista)
-    assert len(lista) == 1
-    assert getByNrApartament(18, lista) is not None
+    try:
+        lista= stergeCheltuiala(10, lista)
+    except ValueError:
+        assert len(lista) == 1
+        assert getByNrApartament(18, lista) is not None
+    except Exception:
+        assert False
+
+
 
 def testModificaCheltuiala():
     lista = adaugaCheltuiala(1, 343, 235, "11.02.2011", "intretinere", [])

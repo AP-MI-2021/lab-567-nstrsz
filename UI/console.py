@@ -1,7 +1,7 @@
 from Domain.cheltuiala import toString
 from Logic.CRUD import adaugaCheltuiala, stergeCheltuiala, modificaCheltuiala
-from Logic.functionalitati import adunareValLaCheltuielileDintr_oData, determinaCeaMaiMareIntretinere, \
-    determinaCeaMaiMareCanal, determinaCeaMaiMareAlteCheltuieli
+from Logic.functionalitati import adunareValLaCheltuielileDintr_oData, detCeleMaiMariCheltuieliPerTip, \
+    ordonareDescDupaSuma, sumeLunarePerApartament
 
 
 def printMenu():
@@ -10,48 +10,80 @@ def printMenu():
     print("3. Modifica cheltuiala")
     print("4. Adunarea unei valori la toate cheltuielile dintr-o data")
     print("5. Determinarea celei mai mari cheltuieli pentru fiecare tip de cheltuială.")
+    print("6. Ordonarea cheltuielilor descrescător după sumă.")
+    print("7. Afișarea sumelor lunare pentru fiecare apartament.")
     print("a. Afiseaza cheltuielile")
     print("x. Iesire")
 
 
 def uiAdaugaCheltuiala(lista):
-    id = int(input("Dati id-ul: "))
-    nrApartament = int(input("Dati numarul apartamentului: "))
-    suma = float(input("Dati suma: "))
-    data = input("Dati data: ")
-    tipul = input("Dati tipul: ")
-    return adaugaCheltuiala(id, nrApartament, suma, data, tipul, lista)
+    try:
+        id = int(input("Dati id-ul: "))
+        nrApartament = int(input("Dati numarul apartamentului: "))
+        suma = float(input("Dati suma: "))
+        data = input("Dati data: ")
+        tipul = input("Dati tipul: ")
+        return adaugaCheltuiala(id, nrApartament, suma, data, tipul, lista)
+    except ValueError as ve:
+        print("Eroare:{}".format(ve))
+        return lista
 
 
 def uiStergeCheltuiala(lista):
-    nrApartament= int(input("Dati numarul apartamentului: "))
-    return stergeCheltuiala(nrApartament,lista)
+    try:
+        nrApartament= int(input("Dati numarul apartamentului: "))
+        return stergeCheltuiala(nrApartament,lista)
+    except ValueError as ve:
+        print("Eroare:{}".format(ve))
+        return lista
 
 
 def uiModificaCheltuiala(lista):
-    id = int(input("Dati noul id: "))
-    nrApartament = int(input("Dati numarul apartamentului: "))
-    suma = float(input("Dati noua suma: "))
-    data = input("Dati noua data: ")
-    tipul = input("Dati noul tip: ")
-    return modificaCheltuiala(id, nrApartament, suma, data, tipul,lista)
+    try:
+        id = int(input("Dati noul id: "))
+        nrApartament = int(input("Dati numarul apartamentului: "))
+        suma = float(input("Dati noua suma: "))
+        data = input("Dati noua data: ")
+        tipul = input("Dati noul tip: ")
+        return modificaCheltuiala(id, nrApartament, suma, data, tipul,lista)
+    except ValueError as ve:
+        print("Eroare:{}".format(ve))
+        return lista
 
 
 def uiAdunareValLaCheltuielileDintr_oData(lista):
-    valoareDeAdunat = float(input("Dati valoarea de adunat: "))
-    data = input("Dati data: ")
-    return adunareValLaCheltuielileDintr_oData(valoareDeAdunat, data, lista)
+    try:
+        valoareDeAdunat = float(input("Dati valoarea de adunat: "))
+        data = input("Dati data: ")
+        return adunareValLaCheltuielileDintr_oData(valoareDeAdunat, data, lista)
+    except ValueError as ve:
+        print("Eroare:{}".format(ve))
+        return lista
 
-
-def uiDeterminaCeleMaiMariCheltuieliPtFiecareTip(lista):
-    print("Intretinere: ", toString(determinaCeaMaiMareIntretinere(lista)))
-    print("Canal: ", toString(determinaCeaMaiMareCanal(lista)))
-    print("Alte Cheltuieli: ", toString(determinaCeaMaiMareAlteCheltuieli(lista)))
 
 
 def showAll(lista):
     for cheltuiala in lista:
         print(toString(cheltuiala))
+
+
+def uiDetCeleMaiMariCheltuieliPerTip(lista):
+    rezultat = detCeleMaiMariCheltuieliPerTip(lista)
+    for tip in rezultat:
+        print("Tipul: {} are cheltuiala cea mai mare {}".format(tip, rezultat[tip]))
+
+
+def uiOrdonareDescDupaSuma(lista):
+    rezultat = ordonareDescDupaSuma(lista)
+
+    showAll(rezultat)
+
+
+def uiSumeLunarePerApartament(lista):
+    rezultat = sumeLunarePerApartament(lista)
+    for nrApartament in rezultat:
+        for data in rezultat[nrApartament]:
+            print ("Apartamentul {} are cheltuielile in luna {} in valoare de {}".format(nrApartament, data, rezultat[nrApartament][data]))
 
 
 def runMenu(lista):
@@ -67,7 +99,11 @@ def runMenu(lista):
         elif optiune == "4":
             lista = uiAdunareValLaCheltuielileDintr_oData(lista)
         elif optiune == "5":
-            uiDeterminaCeleMaiMariCheltuieliPtFiecareTip(lista)
+            uiDetCeleMaiMariCheltuieliPerTip(lista)
+        elif optiune == "6":
+            uiOrdonareDescDupaSuma(lista)
+        elif optiune == "7":
+            uiSumeLunarePerApartament(lista)
         elif optiune == "a":
             showAll(lista)
         elif optiune == "x":
