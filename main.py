@@ -12,12 +12,17 @@ def meniuri():
 
 def main():
     runAllTests()
-
     lista = []
-    lista = adaugaCheltuiala(1, 343, 200, "11.02.2021", "intretinere", lista)
-    lista = adaugaCheltuiala(2, 18, 50, "16.06.2021", "intretinere", lista)
-    lista = adaugaCheltuiala(3, 343, 400, "11.03.2021", "canal", lista)
-    lista = adaugaCheltuiala(4, 343, 235, "11.02.2021", "alte cheltuieli", lista)
+
+
+    '''redoList = []
+    undoList = []
+    
+    lista = adaugaCheltuiala(1, 343, 200, "11.02.2021", "intretinere", lista, undoList, redoList)
+    lista = adaugaCheltuiala(2, 18, 50, "16.06.2021", "intretinere", lista, undoList, redoList)
+    lista = adaugaCheltuiala(3, 343, 400, "11.03.2021", "canal", lista, undoList, redoList)
+    lista = adaugaCheltuiala(4, 343, 235, "11.02.2021", "alte cheltuieli", lista, undoList, redoList)
+    '''
 
     while True:
         meniuri()

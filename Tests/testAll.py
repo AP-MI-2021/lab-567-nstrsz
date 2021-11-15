@@ -1,7 +1,7 @@
 from Tests.testCRUD import testAdaugaCheltuiala, testStergeCheltuiala, testGetByNrApartament
 from Tests.testDomain import testCheltuiala
 from Tests.testFunctionalitati import testAdunareValLaCheltuielileDintr_Data, testDetCeleMaiMariCheltuieliPerTip, \
-    testOrdonareDescDupaSuma, testSumeLunarePerApartament
+    testOrdonareDescDupaSuma, testSumeLunarePerApartament, testDoUndoDoRedo
 
 
 def runAllTests():
@@ -13,3 +13,4 @@ def runAllTests():
     testDetCeleMaiMariCheltuieliPerTip()
     testOrdonareDescDupaSuma()
     testSumeLunarePerApartament()
+    testDoUndoDoRedo()

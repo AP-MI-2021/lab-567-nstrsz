@@ -1,7 +1,7 @@
 from Domain.cheltuiala import getData, getId, getNrApartament, getSuma, getTip, creeazaCheltuiala
 
 
-def adunareValLaCheltuielileDintr_oData(valoareDeAdunat, data, lista):
+def adunareValLaCheltuielileDintr_oData(valoareDeAdunat, data, lista, undoList, redoList):
     '''
     aduna o valoare la toate cheltuielile dintr-o data citita
     :param valoareDeAdunat: valoarea de adunat, float
@@ -24,6 +24,8 @@ def adunareValLaCheltuielileDintr_oData(valoareDeAdunat, data, lista):
             listaNoua.append(cheltuialaModificata)
         else:
             listaNoua.append(cheltuiala)
+    undoList.append(lista)
+    redoList.clear()
     return listaNoua
 
 
@@ -78,3 +80,21 @@ def sumeLunarePerApartament(lista):
             data = dataImpartita[1] + "." + dataImpartita[2]
             apartamente[nrApartament][data] = getSuma(cheltuiala)
     return apartamente
+
+
+def doUndo(lista, undoList, redoList):
+    if len(undoList) > 0:
+        redoList.append(lista)
+        lista = undoList.pop()
+    else:
+        print("Nu se poate face undo!")
+    return lista
+
+
+def doRedo(lista, undoList, redoList):
+    if len(redoList) > 0:
+        undoList.append(lista)
+        lista = redoList.pop()
+    else:
+        print("Nu se poate face redo!")
+    return lista

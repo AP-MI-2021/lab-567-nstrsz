@@ -12,16 +12,16 @@ def help():
     print(" showall- afiseaza toate cheltuielile din lista ")
     print(" iesire- daca doriti sa iesiti din meniu")
 
-def add (id, nrApartament, suma, data, tip, lista):
-    lista = adaugaCheltuiala(id, nrApartament, suma, data, tip, lista)
+def add (id, nrApartament, suma, data, tip, lista, undoList, redoList):
+    lista = adaugaCheltuiala(id, nrApartament, suma, data, tip, lista, undoList, redoList)
     return lista
 
-def delete(nrApartament, lista):
-    lista = stergeCheltuiala(nrApartament, lista)
+def delete(nrApartament, lista, undoList, redoList):
+    lista = stergeCheltuiala(nrApartament, lista, undoList, redoList)
     return lista
 
-def modify(id, nrApartament, suma, data, tip, lista):
-    lista = modificaCheltuiala(id, nrApartament, suma, data, tip, lista)
+def modify(id, nrApartament, suma, data, tip, lista, undoList, redoList):
+    lista = modificaCheltuiala(id, nrApartament, suma, data, tip, lista, undoList, redoList)
     return lista
 
 def showall(lista):
@@ -30,6 +30,8 @@ def showall(lista):
 
 
 def runNewMenu(lista):
+    undoList=[]
+    redoList=[]
     quit = False
     print("Pentru ajutor scrieti 'help' ")
     while not quit:
@@ -45,10 +47,10 @@ def runNewMenu(lista):
                 suma = float(sir[3])
                 data = sir[4]
                 tip = sir[5]
-                lista = add(id, nrApartament, suma, data, tip, lista)
+                lista = add(id, nrApartament, suma, data, tip, lista, undoList, redoList)
             elif sir[0] == "delete":
                 nrApartament = int(sir[1])
-                lista = delete(nrApartament, lista)
+                lista = delete(nrApartament, lista, undoList, redoList)
             elif sir[0] == "showall":
                 showall(lista)
             elif sir[0] == "modify":
@@ -57,6 +59,6 @@ def runNewMenu(lista):
                 suma = float(sir[3])
                 data = sir[4]
                 tip = sir[5]
-                lista = modify(id, nrApartament, suma, data, tip, lista)
+                lista = modify(id, nrApartament, suma, data, tip, lista, undoList, redoList)
             elif sir[0] == "iesire":
                 quit = True

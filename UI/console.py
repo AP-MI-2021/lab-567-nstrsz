@@ -1,7 +1,7 @@
 from Domain.cheltuiala import toString
 from Logic.CRUD import adaugaCheltuiala, stergeCheltuiala, modificaCheltuiala
 from Logic.functionalitati import adunareValLaCheltuielileDintr_oData, detCeleMaiMariCheltuieliPerTip, \
-    ordonareDescDupaSuma, sumeLunarePerApartament
+    ordonareDescDupaSuma, sumeLunarePerApartament, doUndo, doRedo
 
 
 def printMenu():
@@ -12,50 +12,72 @@ def printMenu():
     print("5. Determinarea celei mai mari cheltuieli pentru fiecare tip de cheltuială.")
     print("6. Ordonarea cheltuielilor descrescător după sumă.")
     print("7. Afișarea sumelor lunare pentru fiecare apartament.")
+    print("u. Undo")
+    print("r. Redo")
     print("a. Afiseaza cheltuielile")
     print("x. Iesire")
 
 
-def uiAdaugaCheltuiala(lista):
+def uiAdaugaCheltuiala(lista,undoList,redoList):
     try:
         id = int(input("Dati id-ul: "))
         nrApartament = int(input("Dati numarul apartamentului: "))
         suma = float(input("Dati suma: "))
         data = input("Dati data: ")
         tipul = input("Dati tipul: ")
-        return adaugaCheltuiala(id, nrApartament, suma, data, tipul, lista)
+
+        rezultat = adaugaCheltuiala(id, nrApartament, suma, data, tipul, lista ,undoList,redoList)
+
+        return rezultat
+
+
     except ValueError as ve:
         print("Eroare:{}".format(ve))
         return lista
 
 
-def uiStergeCheltuiala(lista):
+def uiStergeCheltuiala(lista,undoList,redoList):
     try:
         nrApartament= int(input("Dati numarul apartamentului: "))
-        return stergeCheltuiala(nrApartament,lista)
+
+        rezultat = stergeCheltuiala(nrApartament,lista,undoList,redoList)
+
+        return rezultat
+
+
     except ValueError as ve:
         print("Eroare:{}".format(ve))
         return lista
 
 
-def uiModificaCheltuiala(lista):
+def uiModificaCheltuiala(lista,undoList,redoList):
     try:
         id = int(input("Dati noul id: "))
         nrApartament = int(input("Dati numarul apartamentului: "))
         suma = float(input("Dati noua suma: "))
         data = input("Dati noua data: ")
         tipul = input("Dati noul tip: ")
-        return modificaCheltuiala(id, nrApartament, suma, data, tipul,lista)
+
+        rezultat = modificaCheltuiala(id, nrApartament, suma, data, tipul,lista,undoList,redoList)
+
+        return rezultat
+
+
     except ValueError as ve:
         print("Eroare:{}".format(ve))
         return lista
 
 
-def uiAdunareValLaCheltuielileDintr_oData(lista):
+def uiAdunareValLaCheltuielileDintr_oData(lista,undoList,redoList):
     try:
         valoareDeAdunat = float(input("Dati valoarea de adunat: "))
         data = input("Dati data: ")
-        return adunareValLaCheltuielileDintr_oData(valoareDeAdunat, data, lista)
+
+        rezultat = adunareValLaCheltuielileDintr_oData(valoareDeAdunat, data, lista,undoList,redoList)
+
+        return rezultat
+
+
     except ValueError as ve:
         print("Eroare:{}".format(ve))
         return lista
@@ -82,28 +104,35 @@ def uiOrdonareDescDupaSuma(lista):
 def uiSumeLunarePerApartament(lista):
     rezultat = sumeLunarePerApartament(lista)
     for nrApartament in rezultat:
+        print("Apartamentul {} are cheltuielile: ". format(nrApartament))
         for data in rezultat[nrApartament]:
-            print ("Apartamentul {} are cheltuielile in luna {} in valoare de {}".format(nrApartament, data, rezultat[nrApartament][data]))
+            print ("* In luna {} in valoare de {}".format(data, rezultat[nrApartament][data]))
 
 
 def runMenu(lista):
+    undoList=[]
+    redoList=[]
     while True:
         printMenu()
         optiune = input("Dati optiunea: ")
         if optiune == "1":
-            lista = uiAdaugaCheltuiala(lista)
+            lista = uiAdaugaCheltuiala(lista,undoList,redoList)
         elif optiune == "2":
-            lista = uiStergeCheltuiala(lista)
+            lista = uiStergeCheltuiala(lista,undoList,redoList)
         elif optiune == "3":
-            lista = uiModificaCheltuiala(lista)
+            lista = uiModificaCheltuiala(lista,undoList,redoList)
         elif optiune == "4":
-            lista = uiAdunareValLaCheltuielileDintr_oData(lista)
+            lista = uiAdunareValLaCheltuielileDintr_oData(lista,undoList,redoList)
         elif optiune == "5":
             uiDetCeleMaiMariCheltuieliPerTip(lista)
         elif optiune == "6":
             uiOrdonareDescDupaSuma(lista)
         elif optiune == "7":
             uiSumeLunarePerApartament(lista)
+        elif optiune == "u":
+            lista = doUndo(lista,undoList,redoList)
+        elif optiune == "r":
+            lista = doRedo(lista,undoList,redoList)
         elif optiune == "a":
             showAll(lista)
         elif optiune == "x":

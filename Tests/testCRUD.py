@@ -3,8 +3,10 @@ from Logic.CRUD import adaugaCheltuiala, getByNrApartament, stergeCheltuiala, mo
 
 
 def testAdaugaCheltuiala():
+    redoList=[]
+    undoList=[]
     lista=[]
-    lista = adaugaCheltuiala(1, 343, 235, "11.02.2011", "intretinere", lista)
+    lista = adaugaCheltuiala(1, 343, 235, "11.02.2011", "intretinere", lista, undoList, redoList)
     assert len(lista) == 1
     assert getId(getByNrApartament(343,lista)) == 1
     assert getNrApartament(getByNrApartament(343,lista)) == 343
@@ -19,16 +21,18 @@ def testAdaugaCheltuiala():
     # assert getTip(list[0]) == "intretinere"
 
 def testStergeCheltuiala():
+    redoList = []
+    undoList = []
     lista = []
-    lista = adaugaCheltuiala(1, 343, 235, "11.02.2011", "intretinere", lista)
-    lista = adaugaCheltuiala(2, 18, 235, "23.12.2020", "intretinere", lista)
+    lista = adaugaCheltuiala(1, 343, 235, "11.02.2011", "intretinere", lista, undoList, redoList)
+    lista = adaugaCheltuiala(2, 18, 235, "23.12.2020", "intretinere", lista, undoList, redoList)
 
-    lista=stergeCheltuiala(343,lista)
+    lista=stergeCheltuiala(343,lista, undoList, redoList)
     assert len(lista) == 1
     assert getByNrApartament(343, lista) is None
 
     try:
-        lista= stergeCheltuiala(10, lista)
+        lista= stergeCheltuiala(10, lista, undoList, redoList)
     except ValueError:
         assert len(lista) == 1
         assert getByNrApartament(18, lista) is not None
@@ -38,10 +42,12 @@ def testStergeCheltuiala():
 
 
 def testModificaCheltuiala():
-    lista = adaugaCheltuiala(1, 343, 235, "11.02.2011", "intretinere", [])
-    lista = adaugaCheltuiala(2, 18, 235, "23.12.2020", "intretinere", lista)
+    redoList = []
+    undoList = []
+    lista = adaugaCheltuiala(1, 343, 235, "11.02.2011", "intretinere", [], undoList, redoList)
+    lista = adaugaCheltuiala(2, 18, 235, "23.12.2020", "intretinere", lista, undoList, redoList)
 
-    lista = modificaCheltuiala(1,343,70,"9.08.2018", "intretinere", lista)
+    lista = modificaCheltuiala(1,343,70,"9.08.2018", "intretinere", lista, undoList, redoList)
 
     cheltuialaUpdatata = getByNrApartament(343,list)
     assert getId(cheltuialaUpdatata) == 1
@@ -51,9 +57,11 @@ def testModificaCheltuiala():
     assert getTip(cheltuialaUpdatata) == "intretinere"
 
 def testGetByNrApartament():
-    lista = adaugaCheltuiala(1, 343, 235, "11.02.2011", "intretinere", [])
-    lista = adaugaCheltuiala(2, 18, 235, "23.12.2020", "intretinere", lista)
-    lista = adaugaCheltuiala(3, 5, 40, "11.02.2021", "intretinere", lista)
+    redoList = []
+    undoList = []
+    lista = adaugaCheltuiala(1, 343, 235, "11.02.2011", "intretinere", [], undoList, redoList)
+    lista = adaugaCheltuiala(2, 18, 235, "23.12.2020", "intretinere", lista, undoList, redoList)
+    lista = adaugaCheltuiala(3, 5, 40, "11.02.2021", "intretinere", lista, undoList, redoList)
 
     assert getByNrApartament(343,lista) == lista[0]
     assert getByNrApartament(5,lista) == lista[2]
