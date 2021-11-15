@@ -49,7 +49,7 @@ def testModificaCheltuiala():
 
     lista = modificaCheltuiala(1,343,70,"9.08.2018", "intretinere", lista, undoList, redoList)
 
-    cheltuialaUpdatata = getByNrApartament(343,list)
+    cheltuialaUpdatata = getByNrApartament(343,lista)
     assert getId(cheltuialaUpdatata) == 1
     assert getNrApartament(cheltuialaUpdatata) == 343
     assert getSuma(cheltuialaUpdatata) == 70
